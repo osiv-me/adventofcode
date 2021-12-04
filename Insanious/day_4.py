@@ -6,13 +6,11 @@ def main():
 
 def part_one():
 	boards, bool_boards, numbers = parse()
-	winning_board, winning_bool_board, last_number = check_boards(boards, bool_boards, numbers, last=False)
-	return calculate_score(winning_board, winning_bool_board, last_number)
+	return solve(boards, bool_boards, numbers, last=False)
 
 def part_two():
 	boards, bool_boards, numbers = parse()
-	winning_board, winning_bool_board, last_number = check_boards(boards, bool_boards, numbers, last=True)
-	return calculate_score(winning_board, winning_bool_board, last_number)
+	return solve(boards, bool_boards, numbers, last=True)
 
 def parse():
 	data = open('day_4.txt', 'r').read()
@@ -46,7 +44,7 @@ def calculate_score(board, bool_board, number):
 				sum_of_unmarked += board[i][j]
 	return sum_of_unmarked * number
 
-def check_boards(boards, bool_boards, numbers, last):
+def solve(boards, bool_boards, numbers, last):
 	last_winner, last_bool_winner, last_number = None, None, None
 	winners = []
 	last_number = -1
@@ -58,26 +56,23 @@ def check_boards(boards, bool_boards, numbers, last):
 					if boards[i][j][k] == number:
 						if last == False or (last == True and i not in winners): # if part_two; only update boards that hasn't been bingo'ed yet
 							bool_boards[i][j][k] = 1
+
 						if is_bingo(bool_boards[i]):
 							if last == True:
 								if i not in winners: # append winners to list if it hasn't won yet
 									winners.append(i)
 									last_number = number
 							else:
-								return boards[i], bool_boards[i], number
+								return calculate_score(boards[i], bool_boards[i], number)
 
 	i = winners[-1]
-	return boards[i], bool_boards[i], last_number # return last winner
+	return calculate_score(boards[i], bool_boards[i], last_number)
 
 def is_bingo(board):
-	bingo = False
-	for row in board:
-		if sum(row) == 5:
+	for i in range(5):
+		if (board[i][0] == 1 and board[i][1] == 1 and board[i][2] == 1 and board[i][3] == 1 and board[i][4] == 1):
 			return True
-
-	col_totals = [sum(x) for x in zip(*board)]
-	for col in col_totals:
-		if col == 5:
+		if (board[0][i] == 1 and board[1][i] == 1 and board[2][i] == 1 and board[3][i] == 1 and board[4][i] == 1):
 			return True
 
 	return False
