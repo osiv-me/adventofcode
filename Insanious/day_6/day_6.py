@@ -43,13 +43,5 @@ def part_two():
 
 	return sum([ val for key, val in fish_bucket.items()])
 
-def print_fishies(fish_bucket):
-	li = []
-	for key, val in fish_bucket.items():
-		for i in range(0, val):
-			li.append(key)
-	li.sort()
-	print(li)
-
 if __name__ == '__main__':
 	main()
