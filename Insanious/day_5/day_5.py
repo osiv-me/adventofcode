@@ -56,9 +56,7 @@ def part_two():
 			ylen = v2[1] - v1[1]
 			xmult = -1 if xlen < 1 else 1
 			ymult = -1 if ylen < 1 else 1
-			# print(v1, v2, xlen, ylen, xmult, ymult)
 			for i in range(abs(xlen) + 1):
-				# print(v1[0] + i*xmult, v1[1] + i*ymult)
 				grid[v1[0] + i*xmult][v1[1] + i*ymult] += 1
 
 	return sum([1 for row in grid for col in row if col > 1])
