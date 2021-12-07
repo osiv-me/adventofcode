@@ -19,14 +19,7 @@ def part_two():
 	data = [int(x) for x in data]
 	data.sort()
 
-	# brute-force is op
-	lowest = math.inf
-	for i in range(data[-1]):
-		res = sum_fuel(data, i)
-		if res < lowest:
-			lowest = res
-
-	return lowest
+	return sum_fuel(data, sum(data) // len(data))
 
 def sum_fuel(data, value):
 	fuel = 0
